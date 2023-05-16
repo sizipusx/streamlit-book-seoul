@@ -9,7 +9,10 @@ import json
 import matplotlib.pyplot as plt
 import plotly.express as px
 
-plt.rcParams["font.family"] = 'NanumGothic'
+import os
+from matplotlib import font_manager as fm
+fpath = os.path.join(os.getcwd(), "Nanum_Gothic/NanumGothic-Bold.ttf")
+prop = fm.FontProperties(fname=fpath)
 
 def mapMatplotlib(merge_df):
     fig, ax = plt.subplots(ncols=2, sharey=True, figsize=(15, 10))
@@ -28,8 +31,8 @@ def mapMatplotlib(merge_df):
         ax[1].annotate(row['SIG_KOR_NM'], xy=(row['lon'], row['lat']), xytext=(-7, 2),
                        textcoords="offset points", fontsize=8, color='black')
 
-    ax[0].set_title('2023-3월 아파트 평균(만원)')
-    ax[1].set_title('2023-4월 아파트 평균(만원)')
+    ax[0].set_title('2023-3월 아파트 평균(만원)', fontproperties=prop)
+    ax[1].set_title('2023-4월 아파트 평균(만원)', fontproperties=prop)
     ax[0].set_axis_off()
     ax[1].set_axis_off()
 
