@@ -15,7 +15,7 @@ import streamlit as st
 # 폰트 적용
 import os
 from matplotlib import font_manager as fm
-fpath = os.path.join(os.getcwd(), "Nanum_Gothic/SCDream1.otf")
+fpath = os.path.join(os.getcwd(), "Nanum_Gothic/SCDream9.otf")
 prop = fm.FontProperties(fname=fpath)
 
 
