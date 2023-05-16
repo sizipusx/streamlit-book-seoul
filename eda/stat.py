@@ -12,7 +12,7 @@ import plotly.express as px
 import streamlit as st
 
 # 폰트 적용
-plt.rcParams['font.family'] = "Malgun Gothic"
+plt.rcParams["font.family"] = 'NanumGothic'
 def twoMeans(total_df):
     total_df['month'] = total_df['DEAL_YMD'].dt.month
     apt_df = total_df[(total_df['HOUSE_TYPE'] == '아파트') & (total_df['month'].isin([3, 4]))]

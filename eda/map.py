@@ -9,6 +9,7 @@ import json
 import matplotlib.pyplot as plt
 import plotly.express as px
 
+plt.rcParams["font.family"] = 'NanumGothic'
 
 def mapMatplotlib(merge_df):
     fig, ax = plt.subplots(ncols=2, sharey=True, figsize=(15, 10))
