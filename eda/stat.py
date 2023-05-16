@@ -15,18 +15,9 @@ import streamlit as st
 # 폰트 적용
 import os
 from matplotlib import font_manager as fm
-fpath = os.path.join(os.getcwd(), "Nanum_Gothic/NanumGothic-Bold.ttf")
+fpath = os.path.join(os.getcwd(), "Nanum_Gothic/SCDream1.otf")
 prop = fm.FontProperties(fname=fpath)
 
-font_dir = os.path.join(os.getcwd(), "Nanum_Gothic/")
-for font in fm.findSystemFonts(font_dir):
-    st.write(font)
-    fm.fontManager.addfont(font)
-
-st.write(fm.findSystemFonts(fontpaths=None, fontext='ttf'))
-st.markdown("<hr>", unsafe_allow_html=True)
-
-# plt.rcParams['font.family'] = ''
 
 def twoMeans(total_df):
     total_df['month'] = total_df['DEAL_YMD'].dt.month
