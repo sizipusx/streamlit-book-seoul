@@ -25,11 +25,11 @@ def mapMatplotlib(merge_df):
     cb = fig.colorbar(patch_col, ax=ax, shrink=0.5)
     for i, row in merge_df[merge_df['month'] == 3].iterrows():
         ax[0].annotate(row['SIG_KOR_NM'], xy=(row['lon'], row['lat']), xytext=(-7, 2),
-                       textcoords="offset points", fontsize=8, color='black')
+                       textcoords="offset points", fontsize=8, color='black', fontproperties=prop)
 
     for i, row in merge_df[merge_df['month'] == 4].iterrows():
         ax[1].annotate(row['SIG_KOR_NM'], xy=(row['lon'], row['lat']), xytext=(-7, 2),
-                       textcoords="offset points", fontsize=8, color='black')
+                       textcoords="offset points", fontsize=8, color='black', fontproperties=prop)
 
     ax[0].set_title('2023-3월 아파트 평균(만원)', fontproperties=prop)
     ax[1].set_title('2023-4월 아파트 평균(만원)', fontproperties=prop)
