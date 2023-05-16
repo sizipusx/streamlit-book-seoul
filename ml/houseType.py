@@ -4,6 +4,11 @@ import streamlit as st
 import pandas as pd
 from prophet import Prophet
 
+# 폰트 적용
+import os
+from matplotlib import font_manager as fm
+fpath = os.path.join(os.getcwd(), "Nanum_Gothic/SCDream9.otf")
+prop = fm.FontProperties(fname=fpath)
 def predict_plot(total_df, types, periods):
     fig, ax = plt.subplots(figsize=(10, 6), sharex=True, ncols=2, nrows=2)
     for i in range(0, len(types)):
