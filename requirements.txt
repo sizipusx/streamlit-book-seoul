@@ -1,0 +1,13 @@
+pandas
+matplotlib
+seaborn
+plotly
+scikit-learn
+streamlit
+prophet
+statsmodels
+geopandas
+xmltodict
+streamlit-option-menu
+millify
+pingouin
