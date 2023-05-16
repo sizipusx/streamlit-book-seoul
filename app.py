@@ -4,7 +4,10 @@ from streamlit_option_menu import option_menu
 
 from home import run_home
 from eda.eda_home import run_eda
-# from ml.ml_home import run_ml
+try:
+    from ml.ml_home import run_ml
+except:
+    print("error")
 from utils import load_data
 
 def main():
@@ -17,8 +20,8 @@ def main():
     elif selected == "탐색적 자료분석":
         run_eda(total_df)
     elif selected == "부동산 예측":
-        # run_ml(total_df)
-        pass
+        run_ml(total_df)
+
     else:
         print("error..")
 
