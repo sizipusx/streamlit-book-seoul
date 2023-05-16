@@ -5,7 +5,12 @@ import pandas as pd
 import json
 from prophet.serialize import model_from_json
 
-plt.rcParams['font.family'] = "Malgun Gothic"
+# plt.rcParams['font.family'] = "Malgun Gothic"
+# 폰트 적용
+import os
+from matplotlib import font_manager as fm
+fpath = os.path.join(os.getcwd(), "Nanum_Gothic/SCDream9.otf")
+prop = fm.FontProperties(fname=fpath)
 
 @st.cache_resource
 def load_models(sgg_nms):
@@ -33,41 +38,41 @@ def predictDistrict(total_df):
         if i <= 4:
 
             fig = models[i].plot(forecast, uncertainty=True, ax=ax[0, i])
-            ax[0, i].set_title(f"서울시 {sgg_nms[i]} 평균가격 예측 시나리오 {periods}일간")
-            ax[0, i].set_xlabel(f"날짜")
-            ax[0, i].set_ylabel(f"평균가격(만원)")
+            ax[0, i].set_title(f"서울시 {sgg_nms[i]} 평균가격 예측 시나리오 {periods}일간", fontproperties=prop)
+            ax[0, i].set_xlabel(f"날짜", fontproperties=prop)
+            ax[0, i].set_ylabel(f"평균가격(만원)", fontproperties=prop)
             for tick in ax[0, i].get_xticklabels():
                 tick.set_rotation(30)
         elif i <= 9:
 
             fig = models[i].plot(forecast, uncertainty=True, ax=ax[1, i - 5])
-            ax[1, i - 5].set_title(f"서울시 {sgg_nms[i]} 평균가격 예측 시나리오 {periods}일간")
-            ax[1, i - 5].set_xlabel(f"날짜")
-            ax[1, i - 5].set_ylabel(f"평균가격(만원)")
+            ax[1, i - 5].set_title(f"서울시 {sgg_nms[i]} 평균가격 예측 시나리오 {periods}일간", fontproperties=prop)
+            ax[1, i - 5].set_xlabel(f"날짜", fontproperties=prop)
+            ax[1, i - 5].set_ylabel(f"평균가격(만원)", fontproperties=prop)
             for tick in ax[1, i - 5].get_xticklabels():
                 tick.set_rotation(30)
         elif i <= 14:
 
             fig = models[i].plot(forecast, uncertainty=True, ax=ax[2, i - 10])
-            ax[2, i - 10].set_title(f"서울시 {sgg_nms[i]} 평균가격 예측 시나리오 {periods}일간")
-            ax[2, i - 10].set_xlabel(f"날짜")
-            ax[2, i - 10].set_ylabel(f"평균가격(만원)")
+            ax[2, i - 10].set_title(f"서울시 {sgg_nms[i]} 평균가격 예측 시나리오 {periods}일간", fontproperties=prop)
+            ax[2, i - 10].set_xlabel(f"날짜", fontproperties=prop)
+            ax[2, i - 10].set_ylabel(f"평균가격(만원)", fontproperties=prop)
             for tick in ax[2, i - 10].get_xticklabels():
                 tick.set_rotation(30)
         elif i <= 19:
 
             fig = models[i].plot(forecast, uncertainty=True, ax=ax[3, i - 15])
-            ax[3, i - 15].set_title(f"서울시 {sgg_nms[i]} 평균가격 예측 시나리오 {periods}일간")
-            ax[3, i - 15].set_xlabel(f"날짜")
-            ax[3, i - 15].set_ylabel(f"평균가격(만원)")
+            ax[3, i - 15].set_title(f"서울시 {sgg_nms[i]} 평균가격 예측 시나리오 {periods}일간", fontproperties=prop)
+            ax[3, i - 15].set_xlabel(f"날짜", fontproperties=prop)
+            ax[3, i - 15].set_ylabel(f"평균가격(만원)", fontproperties=prop)
             for tick in ax[3, i - 15].get_xticklabels():
                 tick.set_rotation(30)
         elif i <= 24:
 
             fig = models[i].plot(forecast, uncertainty=True, ax=ax[4, i - 20])
-            ax[4, i - 20].set_title(f"서울시 {sgg_nms[i]} 평균가격 예측 시나리오 {periods}일간")
-            ax[4, i - 20].set_xlabel(f"날짜")
-            ax[4, i - 20].set_ylabel(f"평균가격(만원)")
+            ax[4, i - 20].set_title(f"서울시 {sgg_nms[i]} 평균가격 예측 시나리오 {periods}일간", fontproperties=prop)
+            ax[4, i - 20].set_xlabel(f"날짜", fontproperties=prop)
+            ax[4, i - 20].set_ylabel(f"평균가격(만원)", fontproperties=prop)
             for tick in ax[4, i - 20].get_xticklabels():
                 tick.set_rotation(30)
         else:

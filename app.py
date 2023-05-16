@@ -4,10 +4,7 @@ from streamlit_option_menu import option_menu
 
 from home import run_home
 from eda.eda_home import run_eda
-try:
-    from ml.ml_home import run_ml
-except:
-    print("error")
+from ml.ml_home import run_ml
 from utils import load_data
 
 
