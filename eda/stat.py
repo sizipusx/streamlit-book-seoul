@@ -20,6 +20,7 @@ prop = fm.FontProperties(fname=fpath)
 
 font_dir = os.path.join(os.getcwd(), "Nanum_Gothic/")
 for font in fm.findSystemFonts(font_dir):
+    st.write(font)
     fm.fontManager.addfont(font)
 
 st.write(fm.findSystemFonts(fontpaths=None, fontext='ttf'))
