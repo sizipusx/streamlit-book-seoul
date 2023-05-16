@@ -10,6 +10,8 @@ except:
     print("error")
 from utils import load_data
 
+
+
 def main():
     total_df = load_data()
     with st.sidebar:

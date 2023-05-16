@@ -5,6 +5,7 @@ import numpy as np
 import pingouin as pg
 from pingouin import ttest
 
+
 import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
@@ -12,7 +13,20 @@ import plotly.express as px
 import streamlit as st
 
 # 폰트 적용
-plt.rcParams["font.family"] = 'NanumGothic'
+import os
+from matplotlib import font_manager as fm
+fpath = os.path.join(os.getcwd(), "Nanum_Gothic/NanumGothic-Bold.ttf")
+prop = fm.FontProperties(fname=fpath)
+
+font_dir = os.path.join(os.getcwd(), "Nanum_Gothic/")
+for font in fm.findSystemFonts(font_dir):
+    fm.fontManager.addfont(font)
+
+st.write(fm.findSystemFonts(fontpaths=None, fontext='ttf'))
+st.markdown("<hr>", unsafe_allow_html=True)
+
+# plt.rcParams['font.family'] = ''
+
 def twoMeans(total_df):
     total_df['month'] = total_df['DEAL_YMD'].dt.month
     apt_df = total_df[(total_df['HOUSE_TYPE'] == '아파트') & (total_df['month'].isin([3, 4]))]
@@ -86,7 +100,7 @@ def corrRelation(total_df):
     sns.scatterplot(x='BLDG_AREA', y='OBJ_AMT', data=sgg_df)
     ax.text(0.95, 0.05, f'Pearson Correlation: {corr_coef["r"].values[0]:.2f}',
                transform=ax.transAxes, ha='right', fontsize=12)
-    ax.set_title(f'{selected_sgg_nm} 피어슨 상관계수')
+    ax.set_title(f'{selected_sgg_nm} 피어슨 상관계수', fontproperties=prop)
     st.pyplot(fig)
 
     st.markdown("### 거래건수 및 아파트 가격 상관관계")
@@ -97,10 +111,10 @@ def corrRelation(total_df):
     fig, ax = plt.subplots(figsize=(10, 6))
     sns.scatterplot(x='size', y='mean', data=mean_size)
     ax.text(0.95, 0.05, f'Pearson Correlation: {corr_coef_df["r"].values[0]:.2f}',
-            transform=ax.transAxes, ha='right', fontsize=12)
-    ax.set_title(f'{selected_sgg_nm} 상관관계')
-    ax.set_xlabel("거래건수")
-    ax.set_ylabel("아파트 평균 가격")
+            transform=ax.transAxes, ha='right', fontsize=12, fontproperties=prop)
+    ax.set_title(f'{selected_sgg_nm} 상관관계',  fontproperties=prop)
+    ax.set_xlabel("거래건수",  fontproperties=prop)
+    ax.set_ylabel("아파트 평균 가격",  fontproperties=prop)
     st.pyplot(fig)
 
 def regRession(total_df):
@@ -140,9 +154,9 @@ def regRession(total_df):
     x = np.linspace(0, reg_df['BLDG_AREA'].max())
 
     sns.scatterplot(data=reg_df, x='BLDG_AREA', y='OBJ_AMT', ax=ax)
-    ax.set_title("The best-fitting regression line")
-    ax.set_xlabel("건물면적")
-    ax.set_ylabel("아파트거래가격(만원)")
+    ax.set_title("The best-fitting regression line", fontproperties=prop)
+    ax.set_xlabel("건물면적", fontproperties=prop)
+    ax.set_ylabel("아파트거래가격(만원)", fontproperties=prop)
     ax.plot(x, slope * x + intercept)
 
     if intercept < 0:
@@ -151,7 +165,7 @@ def regRession(total_df):
         equation_line = f'$Y={slope:.1f}X+{intercept:.1f}, R^2={np.round(mod1["adj_r2"].values[0], 3)}$'
 
     ax.text(0.95, 0.05, equation_line,
-               transform=ax.transAxes, ha='right', fontsize=12)
+               transform=ax.transAxes, ha='right', fontsize=12, fontproperties=prop)
     st.pyplot(fig)
 
 
