@@ -4,11 +4,28 @@ import streamlit as st
 import pandas as pd
 from prophet import Prophet
 
+# 한글폰트 적용
 # 폰트 적용
+import numpy as np
 import os
-from matplotlib import font_manager as fm
-fpath = os.path.join(os.getcwd(), "Nanum_Gothic/SCDream9.otf")
-prop = fm.FontProperties(fname=fpath)
+import matplotlib.font_manager as fm  # 폰트 관련 용도 as fm
+
+def unique(list):
+    x = np.array(list)
+    return np.unique(x)
+
+font_dirs = [os.getcwd() + '/Nanum_Gothic']
+font_files = fm.findSystemFonts(fontpaths=font_dirs)
+
+for font_file in font_files:
+    fm.fontManager.addfont(font_file)
+fm._load_fontmanager(try_read_cache=False)
+
+fontNames = [f.name for f in fm.fontManager.ttflist]
+fontname = st.selectbox("폰트 선택", unique(fontNames))
+
+plt.rc('font', family=fontname)
+
 def predict_plot(total_df, types, periods):
     fig, ax = plt.subplots(figsize=(10, 6), sharex=True, ncols=2, nrows=2)
     for i in range(0, len(types)):
@@ -21,16 +38,16 @@ def predict_plot(total_df, types, periods):
         forecast = model.predict(future)
         if i <= 1:
             fig = model.plot(forecast, uncertainty=True, ax=ax[0, i])
-            ax[0, i].set_title(f"서울시 {types[i]} 평균가격 예측 시나리오 {periods}일간", fontproperties=prop)
-            ax[0, i].set_xlabel(f"날짜", fontproperties=prop)
-            ax[0, i].set_ylabel(f"평균가격(만원)", fontproperties=prop)
+            ax[0, i].set_title(f"서울시 {types[i]} 평균가격 예측 시나리오 {periods}일간")
+            ax[0, i].set_xlabel(f"날짜")
+            ax[0, i].set_ylabel(f"평균가격(만원)")
             for tick in ax[0, i].get_xticklabels():
                 tick.set_rotation(30)
         else:
             fig = model.plot(forecast, uncertainty=True, ax=ax[1, i-2])
-            ax[1, i-2].set_title(f"서울시 {types[i]} 평균가격 예측 시나리오 {periods}일간", fontproperties=prop)
-            ax[1, i-2].set_xlabel(f"날짜", fontproperties=prop)
-            ax[1, i-2].set_ylabel(f"평균가격(만원)", fontproperties=prop)
+            ax[1, i-2].set_title(f"서울시 {types[i]} 평균가격 예측 시나리오 {periods}일간")
+            ax[1, i-2].set_xlabel(f"날짜")
+            ax[1, i-2].set_ylabel(f"평균가격(만원)")
             for tick in ax[1, i-2].get_xticklabels():
                 tick.set_rotation(30)
     return fig
