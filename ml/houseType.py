@@ -14,18 +14,6 @@ def unique(list):
     x = np.array(list)
     return np.unique(x)
 
-font_dirs = [os.getcwd() + '/Nanum_Gothic']
-font_files = fm.findSystemFonts(fontpaths=font_dirs)
-
-for font_file in font_files:
-    fm.fontManager.addfont(font_file)
-fm._load_fontmanager(try_read_cache=False)
-
-fontNames = [f.name for f in fm.fontManager.ttflist]
-fontname = st.selectbox("폰트 선택", unique(fontNames))
-
-plt.rc('font', family=fontname)
-
 def predict_plot(total_df, types, periods):
     fig, ax = plt.subplots(figsize=(10, 6), sharex=True, ncols=2, nrows=2)
     for i in range(0, len(types)):
@@ -57,6 +45,18 @@ def predictType(total_df):
     total_df['DEAL_YMD'] = pd.to_datetime(total_df['DEAL_YMD'], format="%Y-%m-%d")
     types = list(total_df['HOUSE_TYPE'].unique())
     periods = int(st.number_input("향후 예측 기간을 지정하세요(1일 ~ 30일)", min_value=1, max_value=30, step=1))
+
+    font_dirs = [os.getcwd() + '/Nanum_Gothic']
+    font_files = fm.findSystemFonts(fontpaths=font_dirs)
+
+    for font_file in font_files:
+        fm.fontManager.addfont(font_file)
+    fm._load_fontmanager(try_read_cache=False)
+
+    fontNames = [f.name for f in fm.fontManager.ttflist]
+    fontname = st.selectbox("폰트 선택", unique(fontNames))
+
+    plt.rc('font', family=fontname)
 
     fig = predict_plot(total_df, types, periods)
     st.pyplot(fig)
