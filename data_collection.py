@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 import requests
 import pandas as pd
-SERVICE_KEY = '564b7852646a686a34336f4f6c5571'
+SERVICE_KEY = '서비스키'
 
 def main():
     data = None
