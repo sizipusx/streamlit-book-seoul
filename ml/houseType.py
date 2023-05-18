@@ -4,14 +4,13 @@ import streamlit as st
 import pandas as pd
 from prophet import Prophet
 
-# 한글폰트 적용
 # 폰트 적용
 import numpy as np
 import os
 import matplotlib.font_manager as fm  # 폰트 관련 용도 as fm
 
-def unique(list):
-    x = np.array(list)
+def unique(lst):
+    x = np.array(lst)
     return np.unique(x)
 
 def predict_plot(total_df, types, periods):
