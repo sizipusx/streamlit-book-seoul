@@ -3,6 +3,8 @@ import streamlit as st
 import pandas as pd
 from plotly.subplots import make_subplots
 import plotly.express as px
+import plotly.graph_objects as go
+import numpy as np
 
 def meanChart(total_df, sgg_nm):
     st.markdown("## 가구별 평균 가격 추세 \n")
@@ -136,17 +138,66 @@ def barChart(total_df):
                       yaxis_title='거래건수')
     st.plotly_chart(fig)
 
+def weekChageBarChart(total_df):
+    result = total_df.groupby(['DEAL_YMD', 'HOUSE_TYPE'])['OBJ_AMT'].agg(['mean', 'size']).reset_index()
+    result=result[result['HOUSE_TYPE'] == '아파트']
+    df_weekly = np.round(result[['DEAL_YMD', 'size']].resample('W', on='DEAL_YMD').mean(),2)
+    df_weekly['cntChange'] = df_weekly['size'].pct_change() * 100
+
+    df_weekly = df_weekly.rename(columns={'size':'평균매매건수'})
+
+    # Add a column with colors
+    df_weekly["priceColor"] = np.where(df_weekly["cntChange"] < 0, 'rgba(176,224,230, 0.5)', "rgba(255, 10, 10, 0.5)")
+
+    # Plot
+    fig = go.Figure()
+
+    # Add the bar chart trace
+    fig.add_trace(
+        go.Bar(
+            name='매매건수 변동률',
+            x=df_weekly.index,
+            y=df_weekly['cntChange'],
+            marker_color=df_weekly['priceColor']
+        )
+    )
+
+    # Add the line chart trace
+    fig.add_trace(
+        go.Scatter(
+            name='매매건수 변동률 추이',
+            x=df_weekly.index,
+            y=df_weekly['cntChange'],
+            mode='lines',
+            line=dict(color='black')
+        )
+    )
+
+    fig.update_layout(
+        barmode='stack',
+        title='서울시, 아파트 매매건수 변동률 &  라인 그래프',
+        xaxis=dict(title='주간'),
+        yaxis=dict(title='아파트 매매건수 변동률')
+    )
+
+    # Show the chart
+    st.plotly_chart(fig)
+
+    st.dataframe(df_weekly)
+
 
 def showViz(total_df):
     total_df['DEAL_YMD'] = pd.to_datetime(total_df['DEAL_YMD'], format="%Y-%m-%d")
     sgg_nm = st.sidebar.selectbox("자치구명", sorted(total_df['SGG_NM'].unique()))
-    selected = st.sidebar.radio("차트 메뉴", ['가구당 평균 가격 추세', '가구당 거래 건수', '지역별 평균 가격 막대 그래프'])
+    selected = st.sidebar.radio("차트 메뉴", ['가구당 평균 가격 추세', '가구당 거래 건수', '지역별 평균 가격 막대 그래프', '매매건수 증감 그래프'])
     if selected == "가구당 평균 가격 추세":
         meanChart(total_df, sgg_nm)
     elif selected == "가구당 거래 건수":
         cntChart(total_df, sgg_nm)
     elif selected == "지역별 평균 가격 막대 그래프":
         barChart(total_df)
+    elif selected == "매매건수 증감 그래프":
+        weekChageBarChart(total_df)
     else:
         st.warning("Error")
 
